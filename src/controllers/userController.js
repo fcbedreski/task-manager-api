@@ -1,4 +1,4 @@
-const userService = require(userService);
+const userService = require('../services/userService');
 
 exports.register = async (req, res) => {
     const {email, password} = req.body; 
@@ -12,5 +12,20 @@ exports.register = async (req, res) => {
 
         res.status(400).json({error: err.message});
         
+    }
+}
+
+exports.login = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    try {
+
+        const result = await userService.login(email, password);
+        res.json(result);
+
+    } catch (err) {
+
+        res.status(401).json({ error: err.message });
     }
 }

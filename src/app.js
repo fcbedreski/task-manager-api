@@ -1,5 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
-const userRoutes = require(userRoutes)
+const userRoutes = require('./routes/userRoutes');
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.JWT_SECRET;
 
 const app = express();
 
