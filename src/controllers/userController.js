@@ -14,3 +14,18 @@ exports.register = async (req, res) => {
         
     }
 }
+
+exports.login = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    try {
+
+        const result = await userService.login(email, password);
+        res.json(result);
+
+    } catch (err) {
+
+        res.status(401).json({ error: err.message });
+    }
+}
