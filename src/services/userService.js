@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const users = [] //temp, database later
 
@@ -15,4 +16,28 @@ exports.register = async (email, password) => {
     users.push(user); //temp
 
     return { id: user.id, email: user.email }; 
+}
+
+exports.login = async (email, password) => {
+
+    const user = users.find(u => u.email === email);
+
+    if(!user) {
+        throw new Error('User not found!');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch) {
+        throw new Error('Invalid credentials!');
+    }
+
+    const token = jwt.sign(
+
+        { userId: user.id },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+    );
+
+    return { token };
 }
