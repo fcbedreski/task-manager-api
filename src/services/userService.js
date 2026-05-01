@@ -13,7 +13,7 @@ exports.register = async (email, password) => {
 
 exports.login = async (email, password) => {
 
-    const user = users.find(u => u.email === email);
+    const user = await userRepository.findByEmail(email);
 
     if(!user) {
         throw new Error('User not found!');
