@@ -1,26 +1,19 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const users = [] //temp, database later
+const userRepository = require('../repositories/userRepository');
 
 exports.register = async (email, password) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = {
-        id: users.length + 1,
-        email,
-        password: hashedPassword,
-    };
+    const user = await userRepository.createUser(email, hashedPassword);
 
-    users.push(user); //temp
-
-    return { id: user.id, email: user.email }; 
+    return user;
 }
 
 exports.login = async (email, password) => {
 
-    const user = users.find(u => u.email === email);
+    const user = await userRepository.findByEmail(email);
 
     if(!user) {
         throw new Error('User not found!');
