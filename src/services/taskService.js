@@ -10,3 +10,7 @@ exports.createTask = async (title, userId) => {
 
     return task; 
 }
+
+exports.getTasksByUser = async (userId) => {
+    return await taskRepository.getTasksByUser(userId);
+}
