@@ -12,7 +12,7 @@ exports.createTask = async (title, userId) => {
     return result.rows[0];
 }
 
-exports.getTaskByUser = async (userId) => {
+exports.getTasksByUser = async (userId) => {
 
     const result = await pool.query(
         `SELEC id, title, completed, user_id
