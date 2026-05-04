@@ -15,7 +15,7 @@ exports.createTask = async (title, userId) => {
 exports.getTasksByUser = async (userId) => {
 
     const result = await pool.query(
-        `SELEC id, title, completed, user_id
+        `SELECT id, title, completed, user_id
         FROM tasks
         WHERE user_id = $1
         ORDER BY id DESC`,
