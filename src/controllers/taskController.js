@@ -3,7 +3,7 @@ const taskService = require('../services/taskService');
 exports.create = async (req, res) => {
 
     const { title } = req.body;
-    const { userId } = req.userId;
+    const userId = req.userId;
 
     console.log('CREATE TOKEN:', req.headers.authorization);
 
