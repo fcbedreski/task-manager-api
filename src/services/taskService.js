@@ -14,3 +14,18 @@ exports.createTask = async (title, userId) => {
 exports.getTasksByUser = async (userId) => {
     return await taskRepository.getTasksByUser(userId);
 }
+
+exports.updateTask = async (id, title, completed, userId) => {
+
+    if(!title) {
+        throw new Error('Title is required.');
+    }
+
+    const task = await taskRepository.updateTask(id, title, completed, userId);
+
+    if(!task) {
+        throw new Error('Task not found or not authorized.');
+    }
+
+    return task; 
+}
