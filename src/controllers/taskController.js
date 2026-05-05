@@ -27,3 +27,24 @@ exports.getAll = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+exports.update = async (req, res) => {
+
+    const { id } = req.params;
+    const { title, completed } = req.body; 
+    const userId = req.userId;
+
+    try {
+        const task = await taskService.updateTask(
+            id,
+            title,
+            completed,
+            userId
+        );
+
+        res.json(task);
+
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}

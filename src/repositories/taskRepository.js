@@ -24,3 +24,17 @@ exports.getTasksByUser = async (userId) => {
 
     return result.rows;
 }
+
+exports.updateTask = async (id, title, completed, userId) => {
+
+    const result = await pool.query(
+        `UPDATE tasks
+        SET title = $1,
+            completed = $2
+        WHERE id = $3 AND user_id = $4
+        RETURNING id, title, completed, user_id`,
+        [title, completed, id, userId]
+    );
+
+    return result.rows[0];
+}
