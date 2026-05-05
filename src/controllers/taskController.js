@@ -5,8 +5,6 @@ exports.create = async (req, res) => {
     const { title } = req.body;
     const userId = req.userId;
 
-    console.log('CREATE TOKEN:', req.headers.authorization);
-
     try {
         
         const task = await taskService.createTask(title, userId);
@@ -20,8 +18,6 @@ exports.create = async (req, res) => {
 exports.getAll = async (req, res) => {
 
     const userId = req.userId;
-
-    console.log('GET TOKEN:', req.headers.authorization);
 
     try {
         const tasks = await taskService.getTasksByUser(userId);

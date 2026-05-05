@@ -2,8 +2,6 @@ const pool = require('../config/db');
 
 exports.createTask = async (title, userId) => {
 
-    console.log('User do create task no repository:', userId);
-
     const result = await pool.query(
         `INSERT INTO tasks (title, user_id)
         VALUES ($1, $2)
@@ -15,8 +13,6 @@ exports.createTask = async (title, userId) => {
 }
 
 exports.getTasksByUser = async (userId) => {
-
-    console.log('User do get tasks no repository:', userId);
 
     const result = await pool.query(
         `SELECT id, title, completed, user_id
