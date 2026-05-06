@@ -48,3 +48,18 @@ exports.update = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 }
+
+exports.delete = async (req, res) => {
+
+    const { id } = req.params;
+    const userId = req.userId;
+
+    try {
+
+        await taskService.deleteTask(id, userId);
+        res.status(204).send();
+
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}

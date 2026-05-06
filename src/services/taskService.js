@@ -29,3 +29,14 @@ exports.updateTask = async (id, title, completed, userId) => {
 
     return task; 
 }
+
+exports.deleteTask = async (id, userId) => {
+
+    const deletedTask = await taskRepository.deleteTask(id, userId);
+
+    if(!deletedTask) {
+        throw new Error('Task not found or not authorized.');
+    }
+
+    return deletedTask; 
+}
