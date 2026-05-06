@@ -9,9 +9,12 @@ const secretKey = process.env.JWT_SECRET;
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 
+const errorMiddleware = require('./middlewares/errorMiddleware');
+
 app.use(express.json());
 app.use('/users', userRoutes);
 app.use('/tasks', taskRoutes);
+app.use(errorMiddleware);
 
 app.get('/', (req, res) => {
     res.send('API is running');
