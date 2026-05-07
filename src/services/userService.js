@@ -32,13 +32,13 @@ exports.login = async (email, password) => {
     const user = await userRepository.findByEmail(email);
 
     if(!user) {
-        throw new Error('User not found!');
+        throw new AppError('Invalid credentials.', 401);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if(!isMatch) {
-        throw new Error('Invalid credentials!');
+        throw new AppError('Invalid credentials.', 401);
     }
 
     const token = jwt.sign(
