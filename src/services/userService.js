@@ -10,6 +10,12 @@ exports.register = async (email, password) => {
         throw new AppError('Email and password required.', 400);
     }
 
+    const existingUser = await userRepository.findByEmail(email);
+
+    if(existingUser) {
+        throw new AppError('Email already registered.', 409);
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await userRepository.createUser(email, hashedPassword);
