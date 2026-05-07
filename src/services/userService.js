@@ -25,6 +25,10 @@ exports.register = async (email, password) => {
 
 exports.login = async (email, password) => {
 
+    if(!email || !password) {
+        throw new AppError('Email and password are required.', 400);
+    }
+
     const user = await userRepository.findByEmail(email);
 
     if(!user) {
