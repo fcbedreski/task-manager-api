@@ -19,6 +19,10 @@ exports.getTasksByUser = async (userId) => {
 
 exports.updateTask = async (id, title, completed, userId) => {
 
+    if(!id || isNaN(Number(id))) {
+        throw new AppError('Invalid task ID.', 400);
+    }
+
     if(!title) {
         throw new Error('Title is required.');
     }
