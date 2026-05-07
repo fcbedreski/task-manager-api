@@ -1,9 +1,11 @@
 const taskRepository = require('../repositories/taskRepository');
+const appError = require('../errors/AppError');
+const AppError = require('../errors/AppError');
 
 exports.createTask = async (title, userId) => {
 
     if(!title) {
-        throw new Error('Title is required.');
+        throw new AppError('Title is required.', 400); 
     }
 
     const task = await taskRepository.createTask(title, userId);
