@@ -1,8 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userRepository = require('../repositories/userRepository');
+const AppError = require('../errors/AppError');
 
 exports.register = async (email, password) => {
+
+    if(!email || !password) {
+
+        throw new AppError('Email and password required.', 400);
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
