@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
+const AppError = require('../errors/AppError');
 
 module.exports = (req, res, next) => {
 
     const authHeader = req.headers.authorization; 
 
     if(!authHeader) {
-        return res.status(401).json({ error: 'Token not provided' });
+        return next(new AppError('Token not provided.', 401));
     }
 
     const token = authHeader.split(' ')[1];
@@ -19,6 +20,6 @@ module.exports = (req, res, next) => {
         next();
 
     } catch (err) {
-        return res.status(401).json({ error: 'Invalid token.' });
+        return next(new AppError('Invalid token.', 401));
     }
 }
