@@ -48,10 +48,13 @@ exports.update = async (req, res) => {
             userId
         );
 
-        res.json(task);
+        res.json({
+            success: true,
+            data: task
+        });
 
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        next(err);
     }
 }
 
