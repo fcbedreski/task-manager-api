@@ -24,10 +24,13 @@ exports.getAll = async (req, res) => {
 
     try {
         const tasks = await taskService.getTasksByUser(userId);
-        res.json(tasks);
+        res.json({
+            success: true,
+            data: tasks
+        });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 }
 
