@@ -8,10 +8,13 @@ exports.create = async (req, res) => {
     try {
         
         const task = await taskService.createTask(title, userId);
-        res.status(201).json(task);
+        res.status(201).json({
+            success: true,
+            data: task
+        });
 
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        next(err);
     }
 }
 
