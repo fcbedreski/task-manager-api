@@ -38,6 +38,10 @@ exports.updateTask = async (id, title, completed, userId) => {
 
 exports.deleteTask = async (id, userId) => {
 
+    if(!id || isNaN(Number(id))) {
+        throw new AppError('Invalid task ID.', 400);
+    }
+
     const deletedTask = await taskRepository.deleteTask(id, userId);
 
     if(!deletedTask) {
