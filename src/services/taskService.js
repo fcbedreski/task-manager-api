@@ -41,7 +41,7 @@ exports.deleteTask = async (id, userId) => {
     const deletedTask = await taskRepository.deleteTask(id, userId);
 
     if(!deletedTask) {
-        throw new Error('Task not found or not authorized.');
+        throw new AppError('Task not found or not authorized.', 401);
     }
 
     return deletedTask; 
