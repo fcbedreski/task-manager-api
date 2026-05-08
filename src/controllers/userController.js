@@ -24,7 +24,7 @@ exports.login = async (req, res, next) => {
 
     try {
 
-        const result = await userService.login(email, password);
+        const token = await userService.login(email, password);
         res.json({
             success: true,
             data: token
