@@ -1,6 +1,6 @@
 const taskService = require('../services/taskService');
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
 
     const { title } = req.body;
     const userId = req.userId;
@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     }
 }
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (req, res, next) => {
 
     const userId = req.userId;
 
@@ -34,7 +34,7 @@ exports.getAll = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
+exports.update = async (req, res, next) => {
 
     const { id } = req.params;
     const { title, completed } = req.body; 
@@ -58,7 +58,7 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.delete = async (req, res) => {
+exports.delete = async (req, res, next) => {
 
     const { id } = req.params;
     const userId = req.userId;
