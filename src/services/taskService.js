@@ -24,13 +24,13 @@ exports.updateTask = async (id, title, completed, userId) => {
     }
 
     if(!title) {
-        throw new Error('Title is required.');
+        throw new AppError('Title is required.', 400);
     }
 
     const task = await taskRepository.updateTask(id, title, completed, userId);
 
     if(!task) {
-        throw new Error('Task not found or not authorized.');
+        throw new AppError('Task not found or not authorized.',);
     }
 
     return task; 
