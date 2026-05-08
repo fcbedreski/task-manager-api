@@ -1,6 +1,6 @@
 const userService = require('../services/userService');
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
     const {email, password} = req.body; 
 
     try {
@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
     }
 }
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
