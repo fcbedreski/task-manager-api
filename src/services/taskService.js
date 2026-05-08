@@ -1,9 +1,11 @@
 const taskRepository = require('../repositories/taskRepository');
+const appError = require('../errors/AppError');
+const AppError = require('../errors/AppError');
 
 exports.createTask = async (title, userId) => {
 
     if(!title) {
-        throw new Error('Title is required.');
+        throw new AppError('Title is required.', 400); 
     }
 
     const task = await taskRepository.createTask(title, userId);
@@ -17,14 +19,18 @@ exports.getTasksByUser = async (userId) => {
 
 exports.updateTask = async (id, title, completed, userId) => {
 
+    if(!id || isNaN(Number(id))) {
+        throw new AppError('Invalid task ID.', 400);
+    }
+
     if(!title) {
-        throw new Error('Title is required.');
+        throw new AppError('Title is required.', 400);
     }
 
     const task = await taskRepository.updateTask(id, title, completed, userId);
 
     if(!task) {
-        throw new Error('Task not found or not authorized.');
+        throw new AppError('Task not found or not authorized.', 404);
     }
 
     return task; 
@@ -32,10 +38,14 @@ exports.updateTask = async (id, title, completed, userId) => {
 
 exports.deleteTask = async (id, userId) => {
 
+    if(!id || isNaN(Number(id))) {
+        throw new AppError('Invalid task ID.', 400);
+    }
+
     const deletedTask = await taskRepository.deleteTask(id, userId);
 
     if(!deletedTask) {
-        throw new Error('Task not found or not authorized.');
+        throw new AppError('Task not found or not authorized.', 404);
     }
 
     return deletedTask; 

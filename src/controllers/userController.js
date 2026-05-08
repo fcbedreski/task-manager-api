@@ -1,31 +1,37 @@
 const userService = require('../services/userService');
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
     const {email, password} = req.body; 
 
     try {
 
         const user = await userService.register(email, password);
-        res.status(201).json(user);
+        res.status(201).json({
+            success: true,
+            data: user
+        });
 
     } catch (err) {
 
-        res.status(400).json({error: err.message});
+        next(err);
         
     }
 }
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
     try {
 
-        const result = await userService.login(email, password);
-        res.json(result);
+        const token = await userService.login(email, password);
+        res.json({
+            success: true,
+            data: token
+        });
 
     } catch (err) {
 
-        res.status(401).json({ error: err.message });
+        next(err);
     }
 }
