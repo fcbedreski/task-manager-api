@@ -23,4 +23,20 @@ describe('Tasks', () => {
 
         token = loginResponse.body.data.token;
     });
+
+    it('should create a task', async () => {
+
+        const response = await request(app)
+            .post('/tasks')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                title: 'Study for masters'
+            });
+
+        expect(response.statusCode).toBe(201);
+
+        expect(response.body.success).toBe(true);
+
+        expect(response.body.data.title).toBe('Study for masters');
+    });
 });
