@@ -1,6 +1,9 @@
 const request = require('supertest');
 const app = require('../../app');
 
+const userEmail = 'user@test.com';
+const userPassword = 'strongpassword';
+
 describe('Users', () => {
 
     it('should register a new user', async () => {
@@ -8,8 +11,8 @@ describe('Users', () => {
         const response = await request(app)
             .post('/users/register')
             .send({
-                email: 'test@email.com',
-                password: 'strongpassword'
+                email: userEmail,
+                password: userPassword
             });
     
         expect(response.statusCode).toBe(201);
@@ -24,8 +27,8 @@ describe('Users', () => {
         const response = await request(app)
             .post('/users/login')
             .send({
-                email: 'test@email.com',
-                password: 'strongpassword'
+                email: userEmail,
+                password: userPassword
             });
 
         expect(response.statusCode).toBe(200);
