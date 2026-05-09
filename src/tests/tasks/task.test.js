@@ -2,6 +2,9 @@ const request = require('supertest');
 const app = require('../../app');
 
 let token;
+const userEmail = 'user@test.com';
+const userPassword = 'strongpassword';
+const taskTitle = 'Study for masters';
 
 describe('Tasks', () => {
 
@@ -10,15 +13,15 @@ describe('Tasks', () => {
         await request(app)
             .post('/users/register')
             .send({
-                email: 'test@email.com',
-                password: 'strongpassword'
+                email: userEmail,
+                password: userPassword
             });
 
         const loginResponse = await request(app)
             .post('/users/login')
             .send({
-                email: 'test@email.com',
-                password: 'strongpassword'
+                email: userEmail,
+                password: userPassword
             });
 
         token = loginResponse.body.data.token;
@@ -30,7 +33,7 @@ describe('Tasks', () => {
             .post('/tasks')
             .set('Authorization', `Bearer ${token}`)
             .send({
-                title: 'Study for masters'
+                title: taskTitle
             });
 
         expect(response.statusCode).toBe(201);
