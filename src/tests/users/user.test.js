@@ -18,4 +18,20 @@ describe('Users', () => {
 
         expect(response.body.data).toHaveProperty('id');
     });
+
+    it('should login user successfully', async () => {
+
+        const response = await request(app)
+            .post('/users/login')
+            .send({
+                email: 'test@email.com',
+                password: 'strongpassword'
+            });
+
+        expect(response.statusCode).toBe(200);
+
+        expect(response.body.success).toBe(true);
+
+        expect(response.body.data).toHaveProperty('token');
+    });
 });
