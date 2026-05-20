@@ -87,4 +87,17 @@ describe('Users', () => {
 
         expect(response.body.error).toBe('Invalid credentials.');
     });
+
+    it('should validate required fields on register', async () => {
+
+        const response = await request(app)
+            .post('/users/register')
+            .send({});
+        
+        expect(response.statusCode).toBe(400);
+
+        expect(response.body.sucess).toBe(false);
+
+        expect(response.body.error).toBe('Email and password are required.');
+    });
 });
