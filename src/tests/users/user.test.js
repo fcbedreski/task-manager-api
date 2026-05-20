@@ -5,6 +5,8 @@ const userEmail = 'user@test.com';
 const userPassword = 'strongpassword';
 const duplicatedEmail = 'duplicated@email.com';
 const duplicatedPassword = 'password';
+const wrongPassEmail = 'wrongpassword@gmail.com';
+const wrongPassPassword = '123456';
 
 describe('Users', () => {
 
@@ -61,5 +63,28 @@ describe('Users', () => {
         expect(response.body.sucess).toBe(false);
 
         expect(response.body.error).toBe('Email already registered.');
+    });
+
+    it('should not login with wrong password', async () => {
+
+        await request(app)
+            .post('/users/register')
+            .send({
+                email: wrongPassEmail,
+                password: wrongPassPassword
+            });
+
+        const response = await request(app)
+            .post('/users/login')
+            .send({
+                email: wrongPassEmail,
+                password: 'anotherpassword'
+            });
+
+        expect(response.statusCode).toBe(401);
+
+        expect(response.body.sucess).toBe(false);
+
+        expect(response.body.error).toBe('Invalid credentials.');
     });
 });
