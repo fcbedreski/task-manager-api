@@ -42,4 +42,19 @@ describe('Tasks', () => {
 
         expect(response.body.data.title).toBe('Study for masters');
     });
+
+    it('should not create task without user token', async () => {
+
+        const response = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'new task without token'
+            });
+
+        expect(response.statusCode).toBe(401);
+
+        expect(response.body.success).toBe(false);
+
+        expect(response.body.error).toBe('Token not provided.');
+    })
 });
