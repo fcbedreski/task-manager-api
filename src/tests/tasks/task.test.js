@@ -56,5 +56,21 @@ describe('Tasks', () => {
         expect(response.body.success).toBe(false);
 
         expect(response.body.error).toBe('Token not provided.');
-    })
+    });
+
+    it('should not allow invalid token', async () => {
+
+        const response = await request(app)
+            .post('/tasks')
+            .set('Authorization', 'Bearer invalidTokenHere')
+            .send({
+                title: 'task with invalid token'
+            });
+
+        expect(response.statusCode).toBe(401);
+
+        expect(response.body.sucess).toBe(false);
+
+        expect(response.body.error).toBe('Invalid token.');
+    });
 });
