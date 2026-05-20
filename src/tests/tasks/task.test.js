@@ -73,4 +73,18 @@ describe('Tasks', () => {
 
         expect(response.body.error).toBe('Invalid token.');
     });
+
+    it('should validate task title', async () => {
+
+        const response = await request(app)
+            .post('/tasks')
+            .set('Authorization', `Bearer ${token}`)
+            .send({});
+
+        expect(response.statusCode).toBe(400);
+
+        expect(response.body.success).toBe(false);
+
+        expect(response.body.error).toBe('Title is required.');
+    });
 });
