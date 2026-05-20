@@ -100,4 +100,15 @@ describe('Users', () => {
 
         expect(response.body.error).toBe('Email and password are required.');
     });
+
+    it('should validate required fields on login', async () => {
+
+        const response = await request(app)
+            .post('/users/login')
+            .send({});
+        
+        expect(response.statusCode).toBe(400);
+
+        expect(response.body.sucess).toBe(false);
+    });
 });
