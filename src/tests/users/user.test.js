@@ -60,7 +60,7 @@ describe('Users', () => {
 
         expect(response.statusCode).toBe(409);
 
-        expect(response.body.sucess).toBe(false);
+        expect(response.body.success).toBe(false);
 
         expect(response.body.error).toBe('Email already registered.');
     });
@@ -83,7 +83,7 @@ describe('Users', () => {
 
         expect(response.statusCode).toBe(401);
 
-        expect(response.body.sucess).toBe(false);
+        expect(response.body.success).toBe(false);
 
         expect(response.body.error).toBe('Invalid credentials.');
     });
@@ -96,7 +96,7 @@ describe('Users', () => {
         
         expect(response.statusCode).toBe(400);
 
-        expect(response.body.sucess).toBe(false);
+        expect(response.body.success).toBe(false);
 
         expect(response.body.error).toBe('Email and password are required.');
     });
@@ -109,6 +109,6 @@ describe('Users', () => {
         
         expect(response.statusCode).toBe(400);
 
-        expect(response.body.sucess).toBe(false);
+        expect(response.body.success).toBe(false);
     });
 });
