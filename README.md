@@ -100,15 +100,15 @@ npm test
 
 ### Users
 
-POST /users/register
-POST /users/login
+- POST /users/register
+- POST /users/login
 
 ### Tasks
 
-GET /tasks
-POST /tasks
-PUT /tasks/:id
-DELETE /tasks/:id
+- GET /tasks
+- POST /tasks
+- PUT /tasks/:id
+- DELETE /tasks/:id
 
 ## About the authentication
 
@@ -140,5 +140,5 @@ This project helped me practice:
 - Automated integration testing
 - Error handling patterns
 
-Feel free to give me suggestions about how to improve this project or use this project for learning purposes.
+Feel free to give me suggestions about how to improve this project or to use this project for learning purposes.  
 See ya! :sparkles:
