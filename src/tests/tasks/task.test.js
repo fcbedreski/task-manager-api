@@ -115,4 +115,22 @@ describe('Tasks', () => {
 
         expect(response.body.data.completed).toBe(true);
     });
+
+    it('should delete a task', async () => {
+
+        const createdTask = await request(app)
+            .post('/tasks')
+            .set('Authorization', 'Bearer ${token}')
+            .send({
+                title: 'This task will be deleted soon'
+            });
+
+        const taskId = createdTask.body.data.id;
+
+        const response = await request(app)
+            .delete('/tasks/${taskId}')
+            .set('Authorization', 'Bearer ${token}');
+
+        expect(response.statusCode).toBe(204);
+    });
 });
