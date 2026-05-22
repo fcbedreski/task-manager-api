@@ -133,4 +133,66 @@ describe('Tasks', () => {
 
         expect(response.statusCode).toBe(204);
     });
+
+    it('should not update another user task', async () => {
+
+        //Create and login user A
+        await request(app)
+            .post('/users/register')
+            .send({
+                email: 'usera@mail.com',
+                password: 'userapass'
+            });
+
+        const loginA = await request(app)
+            .post('/users/login')
+            .send({
+                email: 'usera@mail.com',
+                password: 'userapass'
+            });
+        
+        const tokenA = loginA.body.data.token;
+
+        //Create and login user B
+        await request(app)
+            .post('/users/register')
+            .send({
+                email: 'userb@mail.com',
+                password: 'userbpass'
+            });
+
+        const loginB = await request(app)
+            .post('/users/login')
+            .send({
+                email: 'userb@mail.com',
+                password: 'userbpass'
+            });
+        
+        const tokenB = loginB.body.data.token;
+
+        //Create a task of user A
+        const createdTask = await request(app)
+            .post('/tasks')
+            .set('Authorization', `Bearer ${tokenA}`)
+            .send({
+                title: 'Private task for user A'
+            });
+
+        const taskId = createdTask.body.data.id;
+
+        //User B will try to update task from user A
+        const response = await request(app)
+            .put(`/tasks/${taskId}`)
+            .set('Authorization', `Bearer ${tokenB}`)
+            .send({
+                title: 'Trying to hack another user task',
+                completed: true
+            });
+
+        expect(response.statusCode).toBe(404);
+
+        expect(response.body.success).toBe(false);
+
+        expect(response.body.error).toBe('Task not found or not authorized.');
+    });
 });
