@@ -87,4 +87,32 @@ describe('Tasks', () => {
 
         expect(response.body.error).toBe('Title is required.');
     });
+
+    it('should update a task', async () => {
+
+        const createdTask = await request(app)
+            .post('/tasks')
+            .set('Authorization', 'Bearer ${token}')
+            .send({
+                title: 'Old title'
+            });
+
+        const taskId = createdTask.body.data.id;
+
+        const response = await request(app)
+            .put('/tasks/${taskId}')
+            .set('Authorization', 'Bearer ${token}')
+            .send({
+                title: 'New title',
+                completed: true
+            });
+        
+        expect(response.statusCode).toBe(200);
+
+        expect(response.body.sucess).toBe(true);
+
+        expect(response.body.data.title).toBe('New title');
+
+        expect(response.body.data.completed).toBe(true);
+    });
 });
