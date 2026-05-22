@@ -195,4 +195,44 @@ describe('Tasks', () => {
 
         expect(response.body.error).toBe('Task not found or not authorized.');
     });
+
+    it('should not delete another user task', async () => {
+
+        //Login user A
+        const loginA = await request(app)
+            .post('/users/login')
+            .send({
+                email: 'usera@mail.com',
+                password: 'userapass'
+            });
+        
+        const tokenA = loginA.body.data.token;
+
+        //Login user B
+        const loginB = await request(app)
+            .post('/users/login')
+            .send({
+                email: 'userb@mail.com',
+                password: 'userbpass'
+            });
+
+        const tokenB = login.body.data.token;
+
+        //Create a task for user A
+        const createdTask = await request(app)
+            .post('/tasks')
+            .set('Authorization', `Bearer ${tokenA}`)
+            .send({
+                title: 'Private new task for user A'
+            });
+
+        const taskId = createdTask.body.data.id;
+
+        //User B will try to delete the previous task from A
+        const response = await request(app)
+            .delete(`/tasks/${taskId}`)
+            .set('Authorization', `Bearer ${tokenB}`);
+
+        expect(response.statusCode).toBe(404);
+    });
 });
