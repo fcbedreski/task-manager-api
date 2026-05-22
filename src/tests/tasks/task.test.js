@@ -69,7 +69,7 @@ describe('Tasks', () => {
 
         expect(response.statusCode).toBe(401);
 
-        expect(response.body.sucess).toBe(false);
+        expect(response.body.success).toBe(false);
 
         expect(response.body.error).toBe('Invalid token.');
     });
@@ -109,7 +109,7 @@ describe('Tasks', () => {
         
         expect(response.statusCode).toBe(200);
 
-        expect(response.body.sucess).toBe(true);
+        expect(response.body.success).toBe(true);
 
         expect(response.body.data.title).toBe('New title');
 
